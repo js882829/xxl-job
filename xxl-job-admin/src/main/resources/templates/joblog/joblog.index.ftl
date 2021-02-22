@@ -30,7 +30,9 @@
  					<div class="input-group">
 	                	<span class="input-group-addon">${I18n.jobinfo_field_jobgroup}</span>
                 		<select class="form-control" id="jobGroup"  paramVal="<#if jobInfo?exists>${jobInfo.jobGroup}</#if>" >
-                            <option value="0" >${I18n.system_all}</option>
+                            <#if Request["XXL_JOB_LOGIN_IDENTITY"].role == 1>
+                                <option value="0" >${I18n.system_all}</option>  <#-- 仅管理员支持查询全部；普通用户仅支持查询有权限的 jobGroup -->
+                            </#if>
                 			<#list JobGroupList as group>
                 				<option value="${group.id}" >${group.title}</option>
                 			</#list>
@@ -72,7 +74,7 @@
                 </div>
 
 	            <div class="col-xs-1">
-                    <button class="btn btn-block btn-nomal" id="clearLog">${I18n.joblog_clean}</button>
+                    <button class="btn btn-block btn-default" id="clearLog">${I18n.joblog_clean}</button>
 	            </div>
           	</div>
 			
@@ -121,7 +123,7 @@
             <div class="modal-body">
                 <form class="form-horizontal form" role="form" >
                     <div class="form-group">
-                        <label class="col-sm-3 control-label"">${I18n.jobinfo_field_jobgroup}：</label>
+                        <label class="col-sm-3 control-label">${I18n.jobinfo_field_jobgroup}：</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control jobGroupText" readonly >
 							<input type="hidden" name="jobGroup" >
@@ -129,7 +131,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label"">${I18n.jobinfo_job}：</label>
+                        <label class="col-sm-3 control-label">${I18n.jobinfo_job}：</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control jobIdText" readonly >
                             <input type="hidden" name="jobId" >
@@ -137,7 +139,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label"">${I18n.joblog_clean_type}：</label>
+                        <label class="col-sm-3 control-label">${I18n.joblog_clean_type}：</label>
                         <div class="col-sm-9">
                             <select class="form-control" name="type" >
                                 <option value="1" >${I18n.joblog_clean_type_1}</option>
